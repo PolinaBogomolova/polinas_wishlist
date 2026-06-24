@@ -17,9 +17,7 @@
             --radius: 20px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: var(--bg);
@@ -31,7 +29,6 @@
                 radial-gradient(ellipse at 80% 70%, rgba(245, 197, 24, 0.08) 0%, transparent 60%),
                 radial-gradient(ellipse at 50% 50%, rgba(100, 100, 255, 0.05) 0%, transparent 70%);
         }
-
         .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
         .confetti-piece {
             position: absolute; width: 12px; height: 12px; top: -20px;
@@ -42,7 +39,6 @@
             80% { opacity: 0.9; }
             100% { transform: translateY(105vh) rotate(720deg) scale(0.3); opacity: 0; }
         }
-
         .balloon { position: fixed; bottom: -150px; pointer-events: none; z-index: 0; animation: balloonRise linear forwards; filter: blur(0.5px); }
         .balloon-body {
             width: 50px; height: 60px; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
@@ -55,9 +51,7 @@
             50% { transform: translateY(-60vh) translateX(40px) rotate(8deg); opacity: 0.6; }
             100% { transform: translateY(-120vh) translateX(-30px) rotate(-12deg); opacity: 0; }
         }
-
         .main-container { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; padding: 20px; }
-
         .header { text-align: center; padding: 30px 20px 20px; position: relative; }
         .header .cake-icon { font-size: 70px; animation: bounce 2s infinite; display: inline-block; filter: drop-shadow(0 8px 20px rgba(233,68,96,0.4)); }
         @keyframes bounce {
@@ -74,7 +68,6 @@
         }
         .header .subtitle { color: var(--text2); font-size: 1.1em; letter-spacing: 1px; }
         .header .date-badge { display: inline-block; background: var(--accent); color: #fff; padding: 8px 20px; border-radius: 50px; font-weight: 700; margin-top: 12px; font-size: 0.95em; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(233,68,96,0.4); }
-
         .progress-section { background: var(--card-bg); border-radius: var(--radius); padding: 20px 25px; margin: 20px 0; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.06); }
         .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
         .progress-header span { font-weight: 700; font-size: 1em; color: var(--text2); }
@@ -82,7 +75,6 @@
         .progress-bar-outer { background: rgba(255,255,255,0.08); border-radius: 50px; height: 14px; overflow: hidden; position: relative; }
         .progress-bar-inner { height: 100%; border-radius: 50px; background: linear-gradient(90deg, #e94560, #f5c518); transition: width 0.6s cubic-bezier(0.4,0,0.2,1); position: relative; }
         .progress-bar-inner::after { content: ''; position: absolute; right: 2px; top: 2px; width: 10px; height: 10px; background: #fff; border-radius: 50%; opacity: 0.7; }
-
         .gifts-list { display: flex; flex-direction: column; gap: 14px; margin: 20px 0; }
         .gift-card { background: var(--card-bg); border-radius: var(--radius); padding: 18px 22px; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.06); transition: var(--transition); position: relative; overflow: hidden; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
         .gift-card:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0,0,0,0.4); border-color: rgba(255,255,255,0.15); }
@@ -106,7 +98,6 @@
         .btn-delete:hover { border-color: #e94560; color: #e94560; background: rgba(233,68,96,0.1); }
         .gift-link { color: var(--accent); text-decoration: none; font-size: 0.85em; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; margin-top: 2px; transition: var(--transition); }
         .gift-link:hover { color: #ff7b93; text-decoration: underline; }
-
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); animation: fadeIn 0.2s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .modal { background: var(--card-bg); border-radius: var(--radius); padding: 30px; width: 90%; max-width: 420px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); text-align: center; animation: slideUp 0.3s ease; border: 1px solid rgba(255,255,255,0.1); }
@@ -120,15 +111,11 @@
         .btn-confirm:hover { background: #3ddb84; box-shadow: 0 6px 20px rgba(46,204,113,0.4); }
         .btn-cancel { background: transparent; border: 2px solid rgba(255,255,255,0.25); color: #ccc; padding: 12px 24px; border-radius: 50px; cursor: pointer; }
         .btn-cancel:hover { border-color: #fff; color: #fff; }
-
         .empty-state { text-align: center; padding: 40px 20px; color: var(--text2); }
         .empty-state .big-icon { font-size: 5em; opacity: 0.5; margin-bottom: 15px; }
-
         .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 200; background: var(--green); color: #fff; padding: 14px 28px; border-radius: 50px; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: toastIn 0.4s ease, toastOut 0.4s ease 2.2s forwards; pointer-events: none; font-size: 0.95em; letter-spacing: 0.5px; }
         @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-30px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
         @keyframes toastOut { from { opacity: 1; transform: translateX(-50%) translateY(0); } to { opacity: 0; transform: translateX(-50%) translateY(-30px); } }
-
-        /* Мобильная версия */
         @media (max-width: 600px) {
             .main-container { padding: 10px; }
             .header { padding: 15px 5px 10px; }
@@ -136,23 +123,18 @@
             .header h1 { font-size: 1.7em; }
             .header .subtitle { font-size: 0.9em; }
             .header .date-badge { font-size: 0.75em; padding: 5px 14px; }
-
             .progress-section { padding: 12px 15px; margin: 12px 0; }
             .progress-header span { font-size: 0.85em; }
             .progress-header .percent { font-size: 1.2em; }
-
             .gift-card { flex-direction: column; align-items: stretch; padding: 14px; gap: 10px; }
             .gift-image { width: 100%; height: auto; aspect-ratio: 1 / 1; font-size: 2.2em; }
             .gift-info { text-align: center; min-width: auto; }
             .gift-info h4 { font-size: 1em; }
             .gift-info .gift-desc { font-size: 0.78em; }
             .gift-info .gift-extra-desc { font-size: 0.78em; }
-
             .gift-actions { justify-content: center; width: 100%; flex-direction: column; gap: 6px; }
             .btn-book, .btn-unbook, .btn-delete { width: 100%; padding: 12px 0; font-size: 0.9em; }
-
             .gift-card.booked::before { right: 6px; top: 6px; font-size: 1.6em; transform: none; }
-
             .modal { padding: 20px 15px; width: 95%; }
             .modal input { font-size: 0.9em; }
             .btn-confirm, .btn-cancel { width: 100%; margin-top: 6px; }
@@ -161,7 +143,6 @@
 </head>
 <body>
     <div class="confetti-container" id="confettiContainer"></div>
-
     <div class="main-container">
         <header class="header">
             <div class="cake-icon">🎂</div>
@@ -169,7 +150,6 @@
             <p class="subtitle">✨ День Рождения уже скоро! ✨</p>
             <div class="date-badge">📅 1 июля 2026</div>
         </header>
-
         <div class="progress-section">
             <div class="progress-header">
                 <span>🎯 Исполнено желаний</span>
@@ -182,10 +162,8 @@
                 <span id="progressText">0 из 6 подарков забронировано</span>
             </div>
         </div>
-
         <div class="gifts-list" id="giftsList"></div>
     </div>
-
     <div class="modal-overlay" id="modalOverlay" style="display:none;">
         <div class="modal">
             <h3>🎁 Забронировать подарок</h3>
@@ -198,94 +176,68 @@
             </div>
         </div>
     </div>
-
     <script>
-        const STORAGE_KEY = 'birthday_wishlist_final_v1';
+        const STORAGE_KEY = 'birthday_wishlist_final_v3';
         let gifts = [];
         let modalGiftId = null;
-
-        // Актуальный список подарков (всегда здесь)
         const defaultGifts = [
-            { id: 1, name: 'Столик для ноутбука и чашки кофе', desc: 'Librox Oxy Y L, белый, 54.6x40x65 см', extra_desc: 'Чтобы я работала в большем уюте', price: '', link: 'https://www.ozon.ru/product/librox-stolik-prikrovatnyy-oxy-y-l-belyy-belyy-premium-54-6h40h65-sm-2595849406/', image: '', icon: '☕️' },
-            { id: 2, name: 'Робот-пылесос Haier HSR Pro Lite', desc: 'Белый, + влажная уборка', extra_desc: 'Чтобы он чистил, пока меня нет дома', price: '', link: 'https://www.ozon.ru/product/haier-robot-pylesos-haier-hsr-pro-lite-belyy-chernyy-3418343059/', image: '', icon: '🧹' },
-            { id: 3, name: 'Сертификат на массаж', desc: 'Anatomica Massage, любой вид массажа', extra_desc: 'Чтобы я была максимально расслаблена', price: '', link: 'https://anatomicamassage.ru/', image: '', icon: '💆‍♀️' },
-            { id: 4, name: 'Кофемолка электрическая Tuvio', desc: 'Яндекс Фабрика', extra_desc: 'Чтобы любая крупа вжух — и уже мука, хоть на хлеб, хоть на оладушки', price: '', link: 'https://www.ozon.ru/product/kofemolka-elektricheskaya-tuvio-150vt-tcg02-yandeks-fabrika-4072624719/', image: '', icon: '⚙️' },
-            { id: 5, name: 'Туалетная вода Missoni', desc: 'Аромат из Gold Apple', extra_desc: 'Чтобы я была цветочком', price: '', link: 'https://goldapple.ru/82860200002-missoni', image: '', icon: '🌸' },
-            { id: 6, name: 'Серьги созвездия Рак', desc: 'Серьги-пусеты бренда Wisteria Gems', extra_desc: 'Чтобы я блистала', price: '', link: 'https://poisondrop.ru/catalog/sergi/sergi_pusety_rak_86777', image: '', icon: '💎' }
+            { id: 1, name: 'Столик для ноутбука и чашки кофе', desc: 'Librox Oxy Y L, белый, 54.6x40x65 см', extra_desc: 'Чтобы я работала в большем уюте', link: 'https://www.ozon.ru/product/librox-stolik-prikrovatnyy-oxy-y-l-belyy-belyy-premium-54-6h40h65-sm-2595849406/', icon: '☕️' },
+            { id: 2, name: 'Робот-пылесос Haier HSR Pro Lite', desc: 'Белый, + влажная уборка', extra_desc: 'Чтобы он чистил, пока меня нет дома', link: 'https://www.ozon.ru/product/haier-robot-pylesos-haier-hsr-pro-lite-belyy-chernyy-3418343059/', icon: '🧹' },
+            { id: 3, name: 'Сертификат на массаж', desc: 'Anatomica Massage, любой вид массажа', extra_desc: 'Чтобы я была максимально расслаблена', link: 'https://anatomicamassage.ru/', icon: '💆‍♀️' },
+            { id: 4, name: 'Кофемолка электрическая Tuvio', desc: 'Яндекс Фабрика', extra_desc: 'Чтобы любая крупа вжух — и уже мука, хоть на хлеб, хоть на оладушки', link: 'https://www.ozon.ru/product/kofemolka-elektricheskaya-tuvio-150vt-tcg02-yandeks-fabrika-4072624719/', icon: '⚙️' },
+            { id: 5, name: 'Туалетная вода Missoni', desc: 'Аромат из Gold Apple', extra_desc: 'Чтобы я была цветочком', link: 'https://goldapple.ru/82860200002-missoni', icon: '🌸' },
+            { id: 6, name: 'Серьги созвездия Рак', desc: 'Серьги-пусеты бренда Wisteria Gems', extra_desc: 'Чтобы я блистала', link: 'https://poisondrop.ru/catalog/sergi/sergi_pusety_rak_86777', icon: '💎' }
         ];
-
         function loadGifts() {
-            // Всегда берём актуальный список подарков
             gifts = JSON.parse(JSON.stringify(defaultGifts));
-
-            // Восстанавливаем бронирования из localStorage
             const stored = localStorage.getItem(STORAGE_KEY);
             if (stored) {
                 try {
                     const bookedData = JSON.parse(stored);
                     gifts = gifts.map(gift => {
                         const saved = bookedData.find(b => b.id === gift.id);
-                        if (saved && saved.bookedBy) {
-                            gift.bookedBy = saved.bookedBy;
-                        }
+                        if (saved && saved.bookedBy) gift.bookedBy = saved.bookedBy;
                         return gift;
                     });
-                } catch (e) {
-                    console.error('Ошибка загрузки бронирований');
-                }
+                } catch (e) {}
             }
             saveGifts();
         }
-
         function saveGifts() {
-            // Сохраняем только бронирования
             const bookings = gifts.map(g => ({ id: g.id, bookedBy: g.bookedBy }));
             localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
         }
-
         function renderGifts() {
             const container = document.getElementById('giftsList');
-            if (gifts.length === 0) {
-                container.innerHTML = `<div class="empty-state"><div class="big-icon">🎈</div><p>Пока подарков нет.</p></div>`;
-            } else {
-                container.innerHTML = gifts.map(g => {
-                    const isBooked = g.bookedBy && g.bookedBy.trim() !== '';
-                    const imageHtml = g.image ? `<img src="${escapeHtml(g.image)}" alt="${escapeHtml(g.name)}">` : '';
-                    const placeholder = g.icon || '🎁';
-                    return `
-                    <div class="gift-card ${isBooked ? 'booked' : ''}">
-                        <div class="gift-image">
-                            ${imageHtml}
-                            <span class="img-placeholder" style="display: ${g.image ? 'none' : 'block'};">${placeholder}</span>
-                        </div>
-                        <div class="gift-info">
-                            <h4>${escapeHtml(g.name)}</h4>
-                            ${g.desc ? `<p class="gift-desc">${escapeHtml(g.desc)}</p>` : ''}
-                            ${g.extra_desc ? `<p class="gift-extra-desc">✨ ${escapeHtml(g.extra_desc)}</p>` : ''}
-                            ${g.link ? `<a href="${escapeHtml(g.link)}" target="_blank" rel="noopener" class="gift-link">🔗 Посмотреть товар</a>` : ''}
-                            ${isBooked ? `<div class="booked-by">🎀 Забронировал(а): ${escapeHtml(g.bookedBy)}</div>` : ''}
-                        </div>
-                        <div class="gift-actions">
-                            ${isBooked
-                                ? `<button class="btn btn-unbook" onclick="unbookGift(${g.id})">🔓 Отменить</button>`
-                                : `<button class="btn btn-book" onclick="openBookingModal(${g.id})">🎁 Забронировать</button>`
-                            }
-                        </div>
-                    </div>`;
-                }).join('');
-            }
+            container.innerHTML = gifts.map(g => {
+                const isBooked = g.bookedBy && g.bookedBy.trim() !== '';
+                return `
+                <div class="gift-card ${isBooked ? 'booked' : ''}">
+                    <div class="gift-image"><span class="img-placeholder">${g.icon || '🎁'}</span></div>
+                    <div class="gift-info">
+                        <h4>${escapeHtml(g.name)}</h4>
+                        ${g.desc ? `<p class="gift-desc">${escapeHtml(g.desc)}</p>` : ''}
+                        ${g.extra_desc ? `<p class="gift-extra-desc">✨ ${escapeHtml(g.extra_desc)}</p>` : ''}
+                        ${g.link ? `<a href="${escapeHtml(g.link)}" target="_blank" rel="noopener" class="gift-link">🔗 Посмотреть товар</a>` : ''}
+                        ${isBooked ? `<div class="booked-by">🎀 Забронировал(а): ${escapeHtml(g.bookedBy)}</div>` : ''}
+                    </div>
+                    <div class="gift-actions">
+                        ${isBooked
+                            ? `<button class="btn btn-unbook" onclick="unbookGift(${g.id})">🔓 Отменить</button>`
+                            : `<button class="btn btn-book" onclick="openBookingModal(${g.id})">🎁 Забронировать</button>`
+                        }
+                    </div>
+                </div>`;
+            }).join('');
             updateProgress();
         }
-
         function updateProgress() {
             const total = gifts.length;
             const booked = gifts.filter(g => g.bookedBy && g.bookedBy.trim() !== '').length;
-            const percent = total > 0 ? Math.round((booked / total) * 100) : 0;
-            document.getElementById('progressPercent').textContent = percent + '%';
-            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progressPercent').textContent = Math.round((booked / total) * 100) + '%';
+            document.getElementById('progressBar').style.width = (booked / total) * 100 + '%';
             document.getElementById('progressText').textContent = `${booked} из ${total} подарков забронировано`;
         }
-
         function openBookingModal(giftId) {
             modalGiftId = giftId;
             const gift = gifts.find(g => g.id === giftId);
@@ -294,34 +246,23 @@
             document.getElementById('modalOverlay').style.display = 'flex';
             setTimeout(() => document.getElementById('modalGuestName').focus(), 150);
         }
-
-        function closeModal() {
-            document.getElementById('modalOverlay').style.display = 'none';
-            modalGiftId = null;
-        }
-
+        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; modalGiftId = null; }
         function confirmBooking() {
             const guestName = document.getElementById('modalGuestName').value.trim();
-            if (!guestName) {
-                showToast('⚠️ Введите имя!', '#e94560');
-                return;
-            }
+            if (!guestName) { showToast('⚠️ Введите имя!', '#e94560'); return; }
             const gift = gifts.find(g => g.id === modalGiftId);
-            if (gift) {
-                if (gift.bookedBy && gift.bookedBy.trim() !== '') {
-                    showToast('⚠️ Уже забронирован!', '#e94560');
-                } else {
-                    gift.bookedBy = guestName;
-                    saveGifts();
-                    renderGifts();
-                    showToast(`🎉 "${gift.name}" забронирован для ${guestName}!`, '#2ecc71');
-                    spawnBalloons(6);
-                    spawnExtraConfetti(30);
-                }
+            if (gift && !gift.bookedBy) {
+                gift.bookedBy = guestName;
+                saveGifts();
+                renderGifts();
+                showToast(`🎉 "${gift.name}" забронирован для ${guestName}!`, '#2ecc71');
+                spawnBalloons(6);
+                spawnConfetti(30);
+            } else {
+                showToast('⚠️ Уже забронирован!', '#e94560');
             }
             closeModal();
         }
-
         function unbookGift(giftId) {
             const gift = gifts.find(g => g.id === giftId);
             if (gift && gift.bookedBy) {
@@ -331,7 +272,6 @@
                 showToast('🔓 Бронь снята', '#f5c518');
             }
         }
-
         function showToast(msg, bg) {
             const old = document.querySelector('.toast');
             if (old) old.remove();
@@ -342,7 +282,6 @@
             document.body.appendChild(t);
             setTimeout(() => { if (t.parentNode) t.remove(); }, 2700);
         }
-
         function spawnConfetti(count = 20) {
             const container = document.getElementById('confettiContainer');
             const frag = document.createDocumentFragment();
@@ -364,9 +303,6 @@
                 pieces.forEach((p, i) => { if (i < pieces.length - count) p.remove(); });
             }, 5000);
         }
-
-        function spawnExtraConfetti(n) { spawnConfetti(n); }
-
         function spawnBalloons(count = 2) {
             const colors = ['#e94560','#f5c518','#2ecc71','#3498db','#9b59b6','#ff6b6b'];
             for (let i = 0; i < count; i++) {
@@ -382,24 +318,19 @@
                 }, i * 300);
             }
         }
-
         function escapeHtml(str) {
             if (!str) return '';
             const d = document.createElement('div');
             d.textContent = str;
             return d.innerHTML;
         }
-
         document.getElementById('modalOverlay').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeModal();
-            if (e.key === 'Enter' && document.getElementById('modalOverlay').style.display === 'flex') {
-                confirmBooking();
-            }
+            if (e.key === 'Enter' && document.getElementById('modalOverlay').style.display === 'flex') confirmBooking();
         });
-
         function init() {
             loadGifts();
             renderGifts();
