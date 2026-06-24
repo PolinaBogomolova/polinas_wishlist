@@ -200,39 +200,50 @@
     </div>
 
     <script>
-        const STORAGE_KEY = 'birthday_wishlist_final_v2';
-        let gifts = [];
-        let modalGiftId = null;
+<script>
+    const STORAGE_KEY = 'birthday_wishlist_final_v1';
+    let gifts = [];
+    let modalGiftId = null;
 
-        const defaultExtraDesc = {
-            1: 'Чтобы я работала в большем уюте',
-            2: 'Чтобы он чистил, пока меня нет дома',
-            3: 'Чтобы я была максимально расслаблена',
-            4: 'Чтобы любая крупа вжух — и уже мука, хоть на хлеб, хоть на оладушки',
-            5: 'Чтобы я была цветочком',
-            6: 'Чтобы я блистала'
-        };
+    // Эталонный список подарков (всегда актуальный)
+    const defaultGifts = [
+        { id: 1, name: 'Столик для ноутбука и чашки кофе', desc: 'Librox Oxy Y L, белый, 54.6x40x65 см', extra_desc: 'Чтобы я работала в большем уюте', price: '', link: 'https://www.ozon.ru/product/librox-stolik-prikrovatnyy-oxy-y-l-belyy-belyy-premium-54-6h40h65-sm-2595849406/', image: '', icon: '☕️' },
+        { id: 2, name: 'Робот-пылесос Haier HSR Pro Lite', desc: 'Белый, + влажная уборка', extra_desc: 'Чтобы он чистил, пока меня нет дома', price: '', link: 'https://www.ozon.ru/product/haier-robot-pylesos-haier-hsr-pro-lite-belyy-chernyy-3418343059/?at=ywtAwJr6oTDqpopzFBOlXnjuYWkR3kCmM0RGXIJ01rg6&reviewsVariantMode=2', image: '', icon: '🧹' },
+        { id: 3, name: 'Сертификат на массаж', desc: 'Anatomica Massage, любой вид массажа', extra_desc: 'Чтобы я была максимально расслаблена', price: '', link: 'https://anatomicamassage.ru/', image: '', icon: '💆‍♀️' },
+        { id: 4, name: 'Кофемолка электрическая Tuvio', desc: 'Яндекс Фабрика', extra_desc: 'Чтобы любая крупа вжух — и уже мука, хоть на хлеб, хоть на оладушки', price: '', link: 'https://www.ozon.ru/product/kofemolka-elektricheskaya-tuvio-150vt-tcg02-yandeks-fabrika-4072624719/?at=Vvtz6XpR8ukmZQJrtlRv4NOi7EkZwMhpOW1l8I9rxGmR&tab=reviews', image: '', icon: '⚙️' },
+        { id: 5, name: 'Туалетная вода Missoni', desc: 'Аромат из Gold Apple', extra_desc: 'Чтобы я была цветочком', price: '', link: 'https://goldapple.ru/82860200002-missoni', image: '', icon: '🌸' },
+        { id: 6, name: 'Серьги созвездия Рак', desc: 'Серьги-пусеты бренда Wisteria Gems', extra_desc: 'Чтобы я блистала', price: '', link: 'https://poisondrop.ru/catalog/sergi/sergi_pusety_rak_86777', image: '', icon: '💎' }
+    ];
 
-        function loadGifts() {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                try {
-                    gifts = JSON.parse(stored);
-                    gifts = gifts.map(g => {
-                        if (g.extra_desc === undefined && defaultExtraDesc[g.id]) {
-                            g.extra_desc = defaultExtraDesc[g.id];
-                        }
-                        return g;
-                    });
-                } catch (e) {
-                    gifts = getDefaultGifts();
-                }
-            } else {
-                gifts = getDefaultGifts();
+    function loadGifts() {
+        // Всегда берём актуальный список подарков из кода
+        gifts = JSON.parse(JSON.stringify(defaultGifts));
+
+        // Загружаем сохранённые бронирования
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            try {
+                const bookedData = JSON.parse(stored);
+                // Применяем бронирования к актуальному списку
+                gifts = gifts.map(gift => {
+                    const savedGift = bookedData.find(b => b.id === gift.id);
+                    if (savedGift && savedGift.bookedBy) {
+                        gift.bookedBy = savedGift.bookedBy;
+                    }
+                    return gift;
+                });
+            } catch (e) {
+                console.error('Ошибка загрузки данных, используется чистый список');
             }
-            if (gifts.length === 0) gifts = getDefaultGifts();
-            saveGifts();
         }
+        saveGifts();
+    }
+
+    function saveGifts() {
+        // Сохраняем только информацию о бронированиях
+        const bookings = gifts.map(g => ({ id: g.id, bookedBy: g.bookedBy }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+    }
 
         function getDefaultGifts() {
             return [
