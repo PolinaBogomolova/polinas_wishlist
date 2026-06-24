@@ -179,7 +179,7 @@
                 <div class="progress-bar-inner" id="progressBar" style="width: 0%;"></div>
             </div>
             <div style="text-align:center;margin-top:6px;font-size:0.8em;color:var(--text2);">
-                <span id="progressText">0 из 0 подарков забронировано</span>
+                <span id="progressText">0 из 6 подарков забронировано</span>
             </div>
         </div>
 
@@ -200,72 +200,57 @@
     </div>
 
     <script>
-<script>
-    const STORAGE_KEY = 'birthday_wishlist_final_v1';
-    let gifts = [];
-    let modalGiftId = null;
+        const STORAGE_KEY = 'birthday_wishlist_final_v1';
+        let gifts = [];
+        let modalGiftId = null;
 
-    // Эталонный список подарков (всегда актуальный)
-    const defaultGifts = [
-        { id: 1, name: 'Столик для ноутбука и чашки кофе', desc: 'Librox Oxy Y L, белый, 54.6x40x65 см', extra_desc: 'Чтобы я работала в большем уюте', price: '', link: 'https://www.ozon.ru/product/librox-stolik-prikrovatnyy-oxy-y-l-belyy-belyy-premium-54-6h40h65-sm-2595849406/', image: '', icon: '☕️' },
-        { id: 2, name: 'Робот-пылесос Haier HSR Pro Lite', desc: 'Белый, + влажная уборка', extra_desc: 'Чтобы он чистил, пока меня нет дома', price: '', link: 'https://www.ozon.ru/product/haier-robot-pylesos-haier-hsr-pro-lite-belyy-chernyy-3418343059/?at=ywtAwJr6oTDqpopzFBOlXnjuYWkR3kCmM0RGXIJ01rg6&reviewsVariantMode=2', image: '', icon: '🧹' },
-        { id: 3, name: 'Сертификат на массаж', desc: 'Anatomica Massage, любой вид массажа', extra_desc: 'Чтобы я была максимально расслаблена', price: '', link: 'https://anatomicamassage.ru/', image: '', icon: '💆‍♀️' },
-        { id: 4, name: 'Кофемолка электрическая Tuvio', desc: 'Яндекс Фабрика', extra_desc: 'Чтобы любая крупа вжух — и уже мука, хоть на хлеб, хоть на оладушки', price: '', link: 'https://www.ozon.ru/product/kofemolka-elektricheskaya-tuvio-150vt-tcg02-yandeks-fabrika-4072624719/?at=Vvtz6XpR8ukmZQJrtlRv4NOi7EkZwMhpOW1l8I9rxGmR&tab=reviews', image: '', icon: '⚙️' },
-        { id: 5, name: 'Туалетная вода Missoni', desc: 'Аромат из Gold Apple', extra_desc: 'Чтобы я была цветочком', price: '', link: 'https://goldapple.ru/82860200002-missoni', image: '', icon: '🌸' },
-        { id: 6, name: 'Серьги созвездия Рак', desc: 'Серьги-пусеты бренда Wisteria Gems', extra_desc: 'Чтобы я блистала', price: '', link: 'https://poisondrop.ru/catalog/sergi/sergi_pusety_rak_86777', image: '', icon: '💎' }
-    ];
+        // Актуальный список подарков (всегда здесь)
+        const defaultGifts = [
+            { id: 1, name: 'Столик для ноутбука и чашки кофе', desc: 'Librox Oxy Y L, белый, 54.6x40x65 см', extra_desc: 'Чтобы я работала в большем уюте', price: '', link: 'https://www.ozon.ru/product/librox-stolik-prikrovatnyy-oxy-y-l-belyy-belyy-premium-54-6h40h65-sm-2595849406/', image: '', icon: '☕️' },
+            { id: 2, name: 'Робот-пылесос Haier HSR Pro Lite', desc: 'Белый, + влажная уборка', extra_desc: 'Чтобы он чистил, пока меня нет дома', price: '', link: 'https://www.ozon.ru/product/haier-robot-pylesos-haier-hsr-pro-lite-belyy-chernyy-3418343059/', image: '', icon: '🧹' },
+            { id: 3, name: 'Сертификат на массаж', desc: 'Anatomica Massage, любой вид массажа', extra_desc: 'Чтобы я была максимально расслаблена', price: '', link: 'https://anatomicamassage.ru/', image: '', icon: '💆‍♀️' },
+            { id: 4, name: 'Кофемолка электрическая Tuvio', desc: 'Яндекс Фабрика', extra_desc: 'Чтобы любая крупа вжух — и уже мука, хоть на хлеб, хоть на оладушки', price: '', link: 'https://www.ozon.ru/product/kofemolka-elektricheskaya-tuvio-150vt-tcg02-yandeks-fabrika-4072624719/', image: '', icon: '⚙️' },
+            { id: 5, name: 'Туалетная вода Missoni', desc: 'Аромат из Gold Apple', extra_desc: 'Чтобы я была цветочком', price: '', link: 'https://goldapple.ru/82860200002-missoni', image: '', icon: '🌸' },
+            { id: 6, name: 'Серьги созвездия Рак', desc: 'Серьги-пусеты бренда Wisteria Gems', extra_desc: 'Чтобы я блистала', price: '', link: 'https://poisondrop.ru/catalog/sergi/sergi_pusety_rak_86777', image: '', icon: '💎' }
+        ];
 
-    function loadGifts() {
-        // Всегда берём актуальный список подарков из кода
-        gifts = JSON.parse(JSON.stringify(defaultGifts));
+        function loadGifts() {
+            // Всегда берём актуальный список подарков
+            gifts = JSON.parse(JSON.stringify(defaultGifts));
 
-        // Загружаем сохранённые бронирования
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-            try {
-                const bookedData = JSON.parse(stored);
-                // Применяем бронирования к актуальному списку
-                gifts = gifts.map(gift => {
-                    const savedGift = bookedData.find(b => b.id === gift.id);
-                    if (savedGift && savedGift.bookedBy) {
-                        gift.bookedBy = savedGift.bookedBy;
-                    }
-                    return gift;
-                });
-            } catch (e) {
-                console.error('Ошибка загрузки данных, используется чистый список');
+            // Восстанавливаем бронирования из localStorage
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const bookedData = JSON.parse(stored);
+                    gifts = gifts.map(gift => {
+                        const saved = bookedData.find(b => b.id === gift.id);
+                        if (saved && saved.bookedBy) {
+                            gift.bookedBy = saved.bookedBy;
+                        }
+                        return gift;
+                    });
+                } catch (e) {
+                    console.error('Ошибка загрузки бронирований');
+                }
             }
-        }
-        saveGifts();
-    }
-
-    function saveGifts() {
-        // Сохраняем только информацию о бронированиях
-        const bookings = gifts.map(g => ({ id: g.id, bookedBy: g.bookedBy }));
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
-    }
-
-        function getDefaultGifts() {
-            return [
-                { id: 1, name: 'Столик для ноутбука и чашки кофе', desc: 'Librox Oxy Y L, белый, 54.6x40x65 см', extra_desc: 'Чтобы я работала в большем уюте', price: '', link: 'https://www.ozon.ru/product/librox-stolik-prikrovatnyy-oxy-y-l-belyy-belyy-premium-54-6h40h65-sm-2595849406/', image: '', bookedBy: '', icon: '☕️' },
-                { id: 2, name: 'Робот-пылесос Haier HSR Pro Lite', desc: 'Белый, + влажная уборка', extra_desc: 'Чтобы он чистил, пока меня нет дома', price: '', link: 'https://www.ozon.ru/product/haier-robot-pylesos-haier-hsr-pro-lite-belyy-chernyy-3418343059/?at=ywtAwJr6oTDqpopzFBOlXnjuYWkR3kCmM0RGXIJ01rg6&reviewsVariantMode=2', image: '', bookedBy: '', icon: '🧹' },
-                { id: 3, name: 'Сертификат на массаж', desc: 'Anatomica Massage, любой вид массажа', extra_desc: 'Чтобы я была максимально расслаблена', price: '', link: 'https://anatomicamassage.ru/', image: '', bookedBy: '', icon: '💆‍♀️' },
-                { id: 4, name: 'Кофемолка электрическая Tuvio', desc: 'Яндекс Фабрика', extra_desc: 'Чтобы любая крупа вжух — и уже мука, хоть на хлеб, хоть на оладушки', price: '', link: 'https://www.ozon.ru/product/kofemolka-elektricheskaya-tuvio-150vt-tcg02-yandeks-fabrika-4072624719/?at=Vvtz6XpR8ukmZQJrtlRv4NOi7EkZwMhpOW1l8I9rxGmR&tab=reviews', image: '', bookedBy: '', icon: '⚙️' },
-                { id: 5, name: 'Туалетная вода Missoni', desc: 'Аромат из Gold Apple', extra_desc: 'Чтобы я была цветочком', price: '', link: 'https://goldapple.ru/82860200002-missoni', image: '', bookedBy: '', icon: '🌸' },
-                { id: 6, name: 'Серьги созвездия Рак', desc: 'Серьги-пусеты бренда Wisteria Gems', extra_desc: 'Чтобы я блистала', price: '', link: 'https://poisondrop.ru/catalog/sergi/sergi_pusety_rak_86777', image: '', bookedBy: '', icon: '💎' }
-            ];
+            saveGifts();
         }
 
-        function saveGifts() { localStorage.setItem(STORAGE_KEY, JSON.stringify(gifts)); }
+        function saveGifts() {
+            // Сохраняем только бронирования
+            const bookings = gifts.map(g => ({ id: g.id, bookedBy: g.bookedBy }));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+        }
 
         function renderGifts() {
             const container = document.getElementById('giftsList');
             if (gifts.length === 0) {
-                container.innerHTML = `<div class="empty-state"><div class="big-icon">🎈</div><p>Пока подарков нет. Добавьте первый!</p></div>`;
+                container.innerHTML = `<div class="empty-state"><div class="big-icon">🎈</div><p>Пока подарков нет.</p></div>`;
             } else {
                 container.innerHTML = gifts.map(g => {
                     const isBooked = g.bookedBy && g.bookedBy.trim() !== '';
-                    const imageHtml = g.image ? `<img src="${escapeHtml(g.image)}" alt="${escapeHtml(g.name)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">` : '';
+                    const imageHtml = g.image ? `<img src="${escapeHtml(g.image)}" alt="${escapeHtml(g.name)}">` : '';
                     const placeholder = g.icon || '🎁';
                     return `
                     <div class="gift-card ${isBooked ? 'booked' : ''}">
@@ -277,8 +262,7 @@
                             <h4>${escapeHtml(g.name)}</h4>
                             ${g.desc ? `<p class="gift-desc">${escapeHtml(g.desc)}</p>` : ''}
                             ${g.extra_desc ? `<p class="gift-extra-desc">✨ ${escapeHtml(g.extra_desc)}</p>` : ''}
-                            ${g.price ? `<span class="gift-price">💰 ${escapeHtml(g.price)}</span>` : ''}
-                            ${g.link ? `<br><a href="${escapeHtml(g.link)}" target="_blank" rel="noopener" class="gift-link">🔗 Посмотреть товар</a>` : ''}
+                            ${g.link ? `<a href="${escapeHtml(g.link)}" target="_blank" rel="noopener" class="gift-link">🔗 Посмотреть товар</a>` : ''}
                             ${isBooked ? `<div class="booked-by">🎀 Забронировал(а): ${escapeHtml(g.bookedBy)}</div>` : ''}
                         </div>
                         <div class="gift-actions">
